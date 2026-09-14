@@ -6,6 +6,7 @@
         String path;
         String weapon;
         String action;
+
         int level = 1;
         int xp = 0;
         int xpToNextLevel;
@@ -15,6 +16,7 @@
         int magic;    
         int hp;
         int damage;
+
         boolean defeated;
         boolean won;
 
@@ -77,16 +79,38 @@
                 this.xp += xpGained;
                 xpToNextLevel = 200 - xp;
                 System.out.println("Well done! "+ this.name + " has gained "+ xpGained + "\n" + this.name + " is " + xpToNextLevel + " XP left to the next level!" );
+
+                if (xpToNextLevel <= 0) {
+                this.levelUp();
+                }
             }
         }
+        
 
         //Level up
 
-        public void levelUp(int level) {
+        public void levelUp() {
             if (xpToNextLevel <= 0) { 
                 this.level += 1;
                 System.out.println("Congratulations! " + this.name + " has leveled up!");
                 xpToNextLevel = xpToNextLevel + 200;
+                
+                if (this.path.equalsIgnoreCase("Warrior")) {
+            this.strength += 3;
+            this.agility += 1;
+            System.out.println("Your Strength has increased!");
+            }
+                else if (this.path.equalsIgnoreCase("Mage")) {
+            this.magic += 3;
+            this.strength += 1;
+            System.out.println("Your Magic has increased!");
+            }
+                else if (this.path.equalsIgnoreCase("Rogue")) {
+            this.agility += 2;
+            this.magic += 1;
+            this.strength += 1;
+            System.out.println("Your Agility has increased!");
+            }
             }
 
         
