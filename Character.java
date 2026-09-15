@@ -1,28 +1,32 @@
     public class Character {
         //status
 
+        //Strings
         String name;
         String element;
         String path;
         String weapon;
         String action;
-
+        //Integers
         int levelsRaised = 0;
         int level = 1;
+        int baseLevel = 1;
         int xp = 0;
         int xpToNextLevel;
         int age;
         int strength;
+        int baseStrength;
         int agility;
-        int magic;    
+        int baseAgility;
+        int magic; 
+        int baseMagic;   
         int hp;
+        int baseHp = 30;
         int damage;
-
+        //Booleans
         boolean defeated;
         boolean won;
-
-        //Mechanics
-        
+        boolean alive;
 
         //Attack system
 
@@ -53,13 +57,12 @@
                     System.err.println("Good job " + this.name + "! ");
                     that.defeated = true;
                     this.won = true;
+                    this.alive = true;
                     Thread.sleep(1000);
-                    this.gainXP(1200);
+                    this.gainXP(30);
 
                 }
-                
-
-                }
+            }
 
         //Run system
 
@@ -73,6 +76,22 @@
             }
         }
 
+        //Enemy scaler system
+
+        public void scaleEnemy(Character that) {
+            if (this.defeated) {
+                if (that.level > this.level) {
+                    this.level = that.level + this.baseLevel; 
+                    this.strength = this.baseStrength + that.level * 2;
+                    this.agility = this.baseAgility + that.level * 2;
+                    this.magic = this.baseMagic + that.level * 2;
+                    this.hp = this.baseHp + that.level * 2;
+                    this.baseHp = this.hp;
+
+            }
+        }
+    }
+        
         //XP system
 
         public void gainXP(int xpGained) throws InterruptedException {
@@ -102,12 +121,14 @@
                 if (this.path.equalsIgnoreCase("Warrior")) {
             this.strength += 3;
             this.agility += 1;
+            this.hp += 6;
             System.out.println("Your Strength has increased!");
                 Thread.sleep(500);
             }
                 else if (this.path.equalsIgnoreCase("Mage")) {
             this.magic += 3;                                
             this.strength += 1;
+            this.hp += 3;
             System.out.println("Your Magic has increased!");
                 Thread.sleep(500);
             }
@@ -115,6 +136,7 @@
             this.agility += 2;
             this.magic += 1;
             this.strength += 1;
+            this.hp += 4;
             System.out.println("Your Agility has increased!");
                 Thread.sleep(500);
             }
@@ -125,8 +147,5 @@
                 levelsRaised = 0;
                 System.out.println("This is your new status! " + "\n" + "\n" + "Strength = " + this.strength + "\nAgility = " + this.agility +"\nMagic = " + this.magic +"\nHP= " + this.hp  );
             }
-            
-
-        
         }
     }

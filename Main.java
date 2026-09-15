@@ -11,14 +11,19 @@ public static void main(String[] args) throws InterruptedException {
         //Goblin status
 
         goblin.name = "Goblin";
+        goblin.level = 1;
         goblin.element = "Grass";
         goblin.path = "Rogue";
         goblin.weapon = "Axe";
-        goblin.age = 18;
         goblin.strength = 6; 
         goblin.agility = 4;
         goblin.magic = 0;
         goblin.hp = 30;
+        goblin.baseStrength = 6; 
+        goblin.baseAgility = 4;
+        goblin.baseMagic = 0;
+        goblin.baseHp = 30;
+        
     
 
     // First dialogue
@@ -168,6 +173,9 @@ player.hp = 20;
 
 System.out.println("\nOh and look! You have a chance to test this new powers! There's a goblin horde coming to attack the village!");
 Thread.sleep(1000);
+player.alive = true;
+while (player.alive) {
+    
 System.out.print(goblin.name + " has appeared!\nWhat will you do?\n" + "\nAttack\nRun\n" + "\nAnswer: ");
 player.action = scanner.nextLine();
      
@@ -178,7 +186,7 @@ if (player.action.equalsIgnoreCase("Attack")) {
 else if (player.action.equalsIgnoreCase("Run")) {
     player.run(goblin);
 } 
-
+}
 
 
 
