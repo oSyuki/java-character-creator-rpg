@@ -7,6 +7,7 @@
         String weapon;
         String action;
 
+        int levelsRaised = 0;
         int level = 1;
         int xp = 0;
         int xpToNextLevel;
@@ -53,7 +54,7 @@
                     that.defeated = true;
                     this.won = true;
                     Thread.sleep(1000);
-                    this.gainXP(15);
+                    this.gainXP(1200);
 
                 }
                 
@@ -74,11 +75,12 @@
 
         //XP system
 
-        public void gainXP(int xpGained) { 
+        public void gainXP(int xpGained) throws InterruptedException {
             if (this.won) {
                 this.xp += xpGained;
-                xpToNextLevel = 200 - xp;
-                System.out.println("Well done! "+ this.name + " has gained "+ xpGained + "\n" + this.name + " is " + xpToNextLevel + " XP left to the next level!" );
+                xpToNextLevel = (200 * this.level) - this.xp;
+
+                System.out.println("Well done! "+ this.name + " has gained "+ xpGained + "\n" + this.name + " has earned enough XP to level up! " );
 
                 if (xpToNextLevel <= 0) {
                 this.levelUp();
@@ -87,31 +89,43 @@
         }
         
 
-        //Level up
+        //Level up system
 
-        public void levelUp() {
-            if (xpToNextLevel <= 0) { 
+        public void levelUp() throws InterruptedException { 
+
+            while (xpToNextLevel <= 0) { 
                 this.level += 1;
+                levelsRaised += 1;
                 System.out.println("Congratulations! " + this.name + " has leveled up!");
-                xpToNextLevel = xpToNextLevel + 200;
+                Thread.sleep(500);
                 
                 if (this.path.equalsIgnoreCase("Warrior")) {
             this.strength += 3;
             this.agility += 1;
             System.out.println("Your Strength has increased!");
+                Thread.sleep(500);
             }
                 else if (this.path.equalsIgnoreCase("Mage")) {
-            this.magic += 3;
+            this.magic += 3;                                
             this.strength += 1;
             System.out.println("Your Magic has increased!");
+                Thread.sleep(500);
             }
                 else if (this.path.equalsIgnoreCase("Rogue")) {
             this.agility += 2;
             this.magic += 1;
             this.strength += 1;
             System.out.println("Your Agility has increased!");
+                Thread.sleep(500);
             }
+            xpToNextLevel = (200 * this.level) - this.xp;
             }
+            if (xpToNextLevel > 0) {
+                System.out.println("Congratulations! " + this.name + " has leveled up " + levelsRaised + " times! ");  
+                levelsRaised = 0;
+                System.out.println("This is your new status! " + "\n" + "\n" + "Strength = " + this.strength + "\nAgility = " + this.agility +"\nMagic = " + this.magic +"\nHP= " + this.hp  );
+            }
+            
 
         
         }
