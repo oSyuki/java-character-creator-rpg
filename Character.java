@@ -21,7 +21,7 @@
         int magic; 
         int baseMagic;   
         int hp;
-        int baseHp = 30;
+        int maxHp = 30;
         int damage;
         //Booleans
         boolean defeated;
@@ -37,28 +37,31 @@
                 that.hp = 0;
             }
             System.out.println(this.name + " has attacked! ");
-            Thread.sleep(1000);
+            Thread.sleep(500);
 
             System.out.println(that.name + " takes " + this.strength  + " damage!");
-            Thread.sleep(1000);
+            Thread.sleep(500);
 
             System.out.println(that.name + " is " + that.hp + " HP left!");  
-            Thread.sleep(1000);
+            Thread.sleep(500);
         
             
                 if (that.hp > 0) {
                     System.out.println(that.name + " will revide! ");
-                    Thread.sleep(1000);  
+                    Thread.sleep(500);
                     that.attack(this);
                 }
                 else {
                     System.err.println(that.name + " has been defeated!");
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                     System.err.println("Good job " + this.name + "! ");
+                    this.hp = this.maxHp;
+
                     that.defeated = true;
                     this.won = true;
                     this.alive = true;
-                    Thread.sleep(1000);
+
+                    Thread.sleep(500);
                     this.gainXP(30);
 
                 }
@@ -78,16 +81,24 @@
 
         //Enemy scaler system
 
-        public void scaleEnemy(Character that) {
-            if (this.defeated) {
-                if (that.level > this.level) {
-                    this.level = that.level + this.baseLevel; 
-                    this.strength = this.baseStrength + that.level * 2;
-                    this.agility = this.baseAgility + that.level * 2;
-                    this.magic = this.baseMagic + that.level * 2;
-                    this.hp = this.baseHp + that.level * 2;
-                    this.baseHp = this.hp;
-
+            public void scaleEnemy(Character that) {
+                if (this.defeated) {
+                    if (that.level > this.level) {
+                        // player passed Goblin's level
+                        this.defeated = false;
+                        that.won = false;
+                        this.level = that.level + this.baseLevel;
+                        this.strength = this.baseStrength + that.level * 2;
+                        this.agility = this.baseAgility + that.level * 2;
+                        this.magic = this.baseMagic + that.level * 2;
+                        this.hp = this.maxHp + that.level * 2;
+                        this.maxHp = this.hp;
+                    }
+                    else {
+                        // player is still at the same level
+                        this.hp = this.maxHp;
+                        this.defeated = false;
+                        that.won = false;
             }
         }
     }
@@ -117,11 +128,12 @@
                 levelsRaised += 1;
                 System.out.println("Congratulations! " + this.name + " has leveled up!");
                 Thread.sleep(500);
-                
+
                 if (this.path.equalsIgnoreCase("Warrior")) {
             this.strength += 3;
             this.agility += 1;
             this.hp += 6;
+            this.maxHp += 6;
             System.out.println("Your Strength has increased!");
                 Thread.sleep(500);
             }
@@ -129,6 +141,7 @@
             this.magic += 3;                                
             this.strength += 1;
             this.hp += 3;
+            this.maxHp += 3;
             System.out.println("Your Magic has increased!");
                 Thread.sleep(500);
             }
@@ -137,6 +150,7 @@
             this.magic += 1;
             this.strength += 1;
             this.hp += 4;
+            this.maxHp += 4;
             System.out.println("Your Agility has increased!");
                 Thread.sleep(500);
             }
