@@ -18,8 +18,8 @@
         int baseStrength;
         int agility;
         int baseAgility;
-        int magic; 
-        int baseMagic;   
+        int magic;
+        int baseMagic;
         int hp;
         int maxHp = 30;
         int damage;
@@ -28,48 +28,90 @@
         boolean won;
         boolean alive;
 
-        //Attack system
+        //Battle system
 
-        public void attack(Character that) throws InterruptedException { 
-            that.hp = that.hp - (this.strength);
+        public void showAttack(Character target) throws InterruptedException {
+            // Show attack method
 
-            if (that.hp <0) {
-                that.hp = 0;
+            System.out.println(
+                    this.name + " has attacked! "
+            );
+            Thread.sleep(500);
+
+            System.out.println(
+                    target.name + " takes " + this.damage + " damage!"
+            );
+            Thread.sleep(500);
+
+            System.out.println(
+                    target.name + " has " + target.hp + " HP left!"
+            );
+        }
+
+        public void attack(Character target) throws InterruptedException {
+            // Set damage
+            calculateDamage();
+            applyDamage(target);
+            // Loop
+            if (target.hp <= 0) {
+                target.hp = 0;
             }
-            System.out.println(this.name + " has attacked! ");
-            Thread.sleep(500);
+            // Show damage and enemy's info
+            showAttack(target);
 
-            System.out.println(that.name + " takes " + this.strength  + " damage!");
-            Thread.sleep(500);
+            if (target.hp > 0) {
+                // If enemy is still alive
+                System.out.println(
+                        target.name + " will counterattack!"
+                );
+                Thread.sleep(500);
 
-            System.out.println(that.name + " is " + that.hp + " HP left!");  
-            Thread.sleep(500);
-        
-            
-                if (that.hp > 0) {
-                    System.out.println(that.name + " will revide! ");
-                    Thread.sleep(500);
-                    that.attack(this);
-                }
-                else {
-                    System.err.println(that.name + " has been defeated!");
-                    Thread.sleep(500);
-                    System.err.println("Good job " + this.name + "! ");
-                    this.hp = this.maxHp;
+                target.attack(this);
+            }
+            else {
+                setVictory(target);
+            }
+        }
 
-                    that.defeated = true;
-                    this.won = true;
-                    this.alive = true;
+        public void setVictory(Character target) throws InterruptedException {
+            // Victory logic
+            if (target.hp == 0) {
+                System.err.println(
+                        target.name + " has been defeated!"
+                );
+                Thread.sleep(500);
+                System.err.println(
+                        "Good job " + this.name + "! "
+                );
+                this.hp = this.maxHp;
 
-                    Thread.sleep(500);
-                    this.gainXP(30);
+                target.defeated = true;
+                this.won = true;
+                this.alive = true;
 
+                Thread.sleep(500);
+                this.gainXP(30);
+            }
+        }
+            public void calculateDamage() {
+                // Damage method (calculate)
+                if (this.path.equalsIgnoreCase("Warrior")) {
+                    damage = this.strength;
+                } else if (this.path.equalsIgnoreCase("Mage")) {
+                    damage = this.magic;
+                } else {
+                    damage = this.strength;
                 }
             }
 
-        //Run system
+            public void applyDamage(Character target) {
+            // Damage method (deal the calculated damage)
+                    target.hp -= damage;
+                }
+
 
         public void run(Character that) {
+            // Run method
 
             if (this.agility >= that.agility) {
                 System.out.println(this.name + " has escaped!");
@@ -102,7 +144,33 @@
             }
         }
     }
-        
+     public void showEnemy(Character target) throws InterruptedException {
+         // Show enemy status
+         System.out.println("""
+                 ╔══════════════════════════════════╗
+                 ║          ⚔️ %s                   ║
+                 ╠══════════════════════════════════╣
+                 ║       A %s HAS APPEARED!         ║
+                 ╠══════════════════════════════════╣
+                 ║       Level: %d                  ║
+                 ║       HP: %d                     ║
+                 ║       Strength: %d               ║
+                 ║       Agility: %d                ║        
+                 ║       Magic: %d                  ║ 
+                 ╠══════════════════════════════════╣                                           
+                 ║       [1] Attack                 ║
+                 ║       [2] Run                    ║                                 
+                 ╚══════════════════════════════════╝
+                 Your choice: """.formatted(
+                 target.name,
+                 target.name,
+                 target.level,
+                 target.hp,
+                 target.strength,
+                 target.agility,
+                 target.magic
+         ));
+     }
         //XP system
 
         public void gainXP(int xpGained) throws InterruptedException {
@@ -110,23 +178,37 @@
                 this.xp += xpGained;
                 xpToNextLevel = (200 * this.level) - this.xp;
 
-                System.out.println("Well done! "+ this.name + " has gained "+ xpGained + "\n" + this.name + " has earned enough XP to level up! " );
+                System.out.println(
+                        "Well done! " + this.name + " has gained " + xpGained + " XP!");
+                System.out.println(
+                        "Current XP: " + this.xp
+                );
 
                 if (xpToNextLevel <= 0) {
-                this.levelUp();
+                    System.out.println(
+                            this.name + " has earned enough XP to level up!"
+                    );
+
+                    this.levelUp();
+                } else {
+                    System.out.println(
+                            this.name + " needs " + xpToNextLevel + " more XP to level up!"
+                    );
                 }
             }
         }
-        
+
 
         //Level up system
 
-        public void levelUp() throws InterruptedException { 
+        public void levelUp() throws InterruptedException {
 
-            while (xpToNextLevel <= 0) { 
+            while (xpToNextLevel <= 0) {
                 this.level += 1;
                 levelsRaised += 1;
-                System.out.println("Congratulations! " + this.name + " has leveled up!");
+                System.out.println(
+                        "Congratulations! " + this.name + " has leveled up!"
+                );
                 Thread.sleep(500);
 
                 if (this.path.equalsIgnoreCase("Warrior")) {
@@ -134,15 +216,19 @@
             this.agility += 1;
             this.hp += 6;
             this.maxHp += 6;
-            System.out.println("Your Strength has increased!");
+            System.out.println(
+                    "Your Strength has increased!"
+            );
                 Thread.sleep(500);
             }
                 else if (this.path.equalsIgnoreCase("Mage")) {
-            this.magic += 3;                                
+            this.magic += 3;
             this.strength += 1;
             this.hp += 3;
             this.maxHp += 3;
-            System.out.println("Your Magic has increased!");
+            System.out.println(
+                    "Your Magic has increased!"
+            );
                 Thread.sleep(500);
             }
                 else if (this.path.equalsIgnoreCase("Rogue")) {
@@ -151,15 +237,37 @@
             this.strength += 1;
             this.hp += 4;
             this.maxHp += 4;
-            System.out.println("Your Agility has increased!");
+            System.out.println(
+                    "Your Agility has increased!"
+            );
                 Thread.sleep(500);
             }
             xpToNextLevel = (200 * this.level) - this.xp;
             }
             if (xpToNextLevel > 0) {
-                System.out.println("Congratulations! " + this.name + " has leveled up " + levelsRaised + " times! ");  
+                System.out.println(
+                        "Congratulations! " + this.name + " has leveled up " + levelsRaised + " times! "
+                );
                 levelsRaised = 0;
-                System.out.println("This is your new status! " + "\n" + "\n" + "Strength = " + this.strength + "\nAgility = " + this.agility +"\nMagic = " + this.magic +"\nHP= " + this.hp  );
+                System.out.println(
+                        """
+                           ╔══════════════════════════════════╗
+                           ║          🌟 LEVEL UP 🌟          ║
+                           ╠══════════════════════════════════╣
+                           ║                                  ║
+                           ║       Level: %d                  ║
+                           ║       HP: %d                     ║
+                           ║       Strength: %d               ║
+                           ║       Agility: %d                ║        
+                           ║       Magic: %d                  ║
+                           ╚══════════════════════════════════╝
+                           """.formatted(
+                                this.level,
+                                this.hp,
+                                this.strength,
+                                this.agility,
+                                this.magic
+                        ));
             }
         }
     }

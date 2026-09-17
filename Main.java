@@ -44,35 +44,31 @@ public static void main(String[] args) throws InterruptedException {
         Thread.sleep(500);
     }
 
-    System.out.print("\nWhich of these elements are you most connected to?\n\nFire\nThunder\nIce\nWater\nGrass\n " + "\nAnswer: ");
+    System.out.print("""
+            Which one of these do you have most connection with?
+            ╔══════════════════════════════════╗
+            ║           💥ELEMENTS             ║
+            ╠══════════════════════════════════╣
+            ║        🔥Fire                    ║
+            ║         ⚡Thunder                 ║
+            ║        ❄️Ice                     ║
+            ║        💧Water                   ║
+            ║        🌿Grass                   ║
+            ╚══════════════════════════════════╝
+            Your choice: """);
     player.element = scanner.nextLine();
 
-    if (player.element.equalsIgnoreCase("Fire")) {
-        System.out.println("Oh a hothead huh, All right, it fits you!");
-        Thread.sleep(500);
-    }
-    else if (player.element.equalsIgnoreCase("Thunder")) {
-        System.out.println("Ok! I got it! Calm down! You're so hiperactive!");
-        Thread.sleep(500);
-    }
-    else if (player.element.equalsIgnoreCase("Ice")) {
-        System.out.println("Okay? I thought you would be happier saying that.");
-        Thread.sleep(500);
-    }
-    else if (player.element.equalsIgnoreCase("Water")) {
-        System.out.println("The way your words flow from you... it fits you!");
-        Thread.sleep(500);
-    }
-    else if (player.element.equalsIgnoreCase("Grass")) {
-        System.out.println("... Can you be quicker answering the next?");
-        Thread.sleep(500);
-    }
-    else {
-        System.out.println("Uh? Never heard of it.");
-        Thread.sleep(500);
-    }
 
-    System.out.print("Which one of these describes you better?\nWarrior\nMage\nRogue\n " + "\nAnswer: " );
+    System.out.print("""
+            Which one of these describes you better?
+            ╔══════════════════════════════════╗
+            ║           💥ELEMENTOS            ║
+            ╠══════════════════════════════════╣
+            ║        ⚔️Warrior                 ║
+            ║        🪄Mage                    ║
+            ║        🗡️Rogue                   ║
+            ╚══════════════════════════════════╝
+            Your choice:\s""");
     player.path = scanner.nextLine();
     Thread.sleep(500);
 
@@ -103,7 +99,18 @@ public static void main(String[] args) throws InterruptedException {
         Thread.sleep(500);
     }
 
-    System.out.print("\nLook at your left side, which of these weapons would you like to use?\nAxe\nSword\nBow\nTwin\nKnifes\nStaff\n" + "\nAnswer: ");
+    System.out.print("""
+            Which one of these fits you better?
+            ╔══════════════════════════════════╗
+            ║           💥WEAPONS              ║
+            ╠══════════════════════════════════╣
+            ║        🪓Axe                     ║
+            ║        🗡️Sword                   ║
+            ║        🏹Bow                     ║
+            ║        ⚔️Twin Knifes             ║
+            ║        🪄Staff                   ║
+            ╚══════════════════════════════════╝
+            Your choice:\s""");
     Thread.sleep(500);
     player.weapon = scanner.nextLine();
 
@@ -158,39 +165,50 @@ player.hp = 20;
     player.strength += 5;
     }
 
-    if (player.path.equalsIgnoreCase("Warrior")) {
-    System.out.println("Your status are very good for a beginner Warrior!\n" + "\n" + player.name + " status:\n" + "Age: " + player.age + "\n" + "\n"+ "Path: "  + player.path +"\nElement: " + player.element +"\nWeapon: " + player.weapon + "\n" + "\n" + "Strength = " + player.strength + "\nAgility = " + player.agility +"\nMagic = " + player.magic +"\nHP= " + player.hp  );
     Thread.sleep(500);
-    }
-    else if (player.path.equalsIgnoreCase("Rogue")) {
-    System.out.println("Your status are very good for a beginner Rogue!\n" + "\n" + player.name + " status:\n" + "Age: " + player.age + "\n" + "\n"+ "Path: "  + player.path +"\nElement: " + player.element +"\nWeapon: " + player.weapon + "\n" + "\n" + "Strength = " + player.strength + "\nAgility = " + player.agility +"\nMagic = " + player.magic +"\nHP= " + player.hp  );
-    Thread.sleep(500);
-    }
-    else if (player.path.equalsIgnoreCase("Mage")) {
-    System.out.println("Your status are very good for a beginner Mage!\n" + "\n" + player.name + " status:\n" + "Age: " + player.age + "\n" + "\n"+ "Path: "  + player.path +"\nElement: " + player.element +"\nWeapon: " + player.weapon + "\n" + "\n" + "Strength = " + player.strength + "\nAgility = " + player.agility +"\nMagic = " + player.magic +"\nHP= " + player.hp  );
-    Thread.sleep(500);
-    }
+    System.out.println("""
+  And... that's your status!
+  ╔══════════════════════════════════╗
+  ║        🌟 %s 🌟                  ║
+  ╠══════════════════════════════════╣
+  ║ Path: %s         Level: %d       ║
+  ║ Age: %d          HP: %d          ║
+  ║ Element: %s      Strength: %d    ║
+  ║ Weapon: %s       Agility: %d     ║
+  ║                  Magic: %d       ║
+  ╚══════════════════════════════════╝
+  Your choice:\s"""
+   .formatted(
+           player.name,
+           player.path,
+           player.level,
+           player.age,
+           player.hp,
+           player.element,
+           player.strength,
+           player.weapon,
+           player.agility,
+           player.magic
+    ));
 
 System.out.println("\nOh and look! You have a chance to test this new powers! There's a goblin horde coming to attack the village!");
 Thread.sleep(500);
 player.alive = true;
 while (player.alive) {
 
-System.out.print(goblin.name + " has appeared!\nWhat will you do?\n" + "\nAttack\nRun\n" + "\nAnswer: ");
+
 goblin.scaleEnemy(player);
+player.showEnemy(goblin);
 player.action = scanner.nextLine();
 
-if (player.action.equalsIgnoreCase("Attack")) {
+if (player.action.equalsIgnoreCase("Attack") || player.action.equalsIgnoreCase("1")) {
     player.attack(goblin);
     Thread.sleep(500);
 }
-else if (player.action.equalsIgnoreCase("Run")) {
+else if (player.action.equalsIgnoreCase("Run")|| player.action.equalsIgnoreCase("2")) {
     player.run(goblin);
 }
 }
-
-
-
 scanner.close();
     }
 }
