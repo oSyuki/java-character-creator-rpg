@@ -110,16 +110,19 @@
                 }
 
 
-        public void run(Character that) {
-            // Run method
-
-            if (this.agility >= that.agility) {
-                System.out.println(this.name + " has escaped!");
-            }
-            else {
-                System.out.println("There's no way to escape!");
-            }
+            public boolean run(Character target) {
+                // Run method
+                if (this.agility >= target.agility) {
+                    System.out.println(this.name + " has escaped!");
+                    return true;
+                }
+                else {
+                    System.out.println("There's no way to escape!");
+                    return false;
+                }
         }
+
+
 
         //Enemy scaler system
 
