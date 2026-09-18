@@ -1,4 +1,6 @@
-    public class Character {
+import java.util.Scanner;
+
+public class Character {
         //status
 
         //Strings
@@ -23,11 +25,155 @@
         int baseMagic;
         int hp;
         int maxHp = 30;
+        int baseHp = 30;
         int damage;
         //Booleans
         boolean defeated;
         boolean won;
         boolean alive;
+
+        // imports
+        Scanner scanner = new Scanner(System.in);
+
+
+        // First dialogue method
+        public void firstDialogue() throws InterruptedException {
+            System.out.print("What's your name? ");
+            this.name = scanner.nextLine();
+
+            System.out.print("How old are you? ");
+            this.age = scanner.nextInt();
+            scanner.nextLine();
+
+            if (this.age <= 18) {
+                System.out.println("Starting at that age, " + this.name + "? That's brave!");
+                Thread.sleep(500);
+            } else {
+                System.out.println("You know it's time when it's the time right, " + this.name + "? All right!");
+                Thread.sleep(500);
+            }
+            System.out.print("""
+            Which one of these do you have most connection with?
+            ╔══════════════════════════════════╗
+            ║           💥ELEMENTS             ║
+            ╠══════════════════════════════════╣
+            ║        🔥Fire                    ║
+            ║         ⚡Thunder                 ║
+            ║        ❄️Ice                     ║
+            ║        💧Water                   ║
+            ║        🌿Grass                   ║
+            ╚══════════════════════════════════╝
+            Your choice:\s""");
+            this.element = scanner.nextLine();
+
+
+            System.out.print("""
+            Which one of these describes you better?
+            ╔══════════════════════════════════╗
+            ║           💥ELEMENTOS            ║
+            ╠══════════════════════════════════╣
+            ║        ⚔️Warrior                 ║
+            ║        🪄Mage                    ║
+            ║        🗡️Rogue                   ║
+            ╚══════════════════════════════════╝
+            Your choice:\s""");
+            this.path = scanner.nextLine();
+            Thread.sleep(500);
+
+            // WARRIOR COMBINATIONS
+            System.out.println(
+                    "I can see you'll be such a great " + this.element + " " + this.path + "Someday! "
+            );
+
+
+            System.out.print("""
+            Which one of these fits you better?
+            ╔══════════════════════════════════╗
+            ║           💥WEAPONS              ║
+            ╠══════════════════════════════════╣
+            ║        🪓Axe                     ║
+            ║        🗡️Sword                   ║
+            ║        🏹Bow                     ║
+            ║        ⚔️Twin Knifes             ║
+            ║        🪄Staff                   ║
+            ╚══════════════════════════════════╝
+            Your choice:\s""");
+            Thread.sleep(500);
+            this.weapon = scanner.nextLine();
+
+            System.out.println(
+                    this.weapon + "? That's a good choice!\nNow let's see your status!"
+            );
+            Thread.sleep(500);
+        }
+
+        // Player status method
+        public void playerBaseStatus() throws InterruptedException {
+
+            if (this.path.equalsIgnoreCase("Warrior")) {
+                this.strength = 10;
+                this.agility = 4;
+                this.magic = 1;
+                this.hp = 25;
+            } else if (this.path.equalsIgnoreCase("Mage")) {
+                this.strength = 0;
+                this.agility = 5;
+                this.magic = 10;
+                this.hp = 15;
+            } else if (this.path.equalsIgnoreCase("Rogue")) {
+                this.strength = 4;
+                this.agility = 10;
+                this.magic = 5;
+                this.hp = 20;
+            }
+
+            //Weapon combinations
+            if (this.weapon.equalsIgnoreCase("Axe")) {
+                this.strength += 7;
+                this.agility -= 2;
+            } else if (this.weapon.equalsIgnoreCase("Sword")) {
+                this.strength += 5;
+                this.agility -= 1;
+            } else if (this.weapon.equalsIgnoreCase("bow")) {
+                this.agility += 7;
+                this.magic += 3;
+            } else if (this.weapon.equalsIgnoreCase("Twin Knifes")) {
+                this.strength += 3;
+                this.agility += 6;
+                this.magic -= 1;
+            } else if (this.weapon.equalsIgnoreCase("Staff")) {
+                this.magic += 10;
+                this.agility -= 4;
+                this.strength += 5;
+            }
+
+            Thread.sleep(500);
+            System.out.println("""
+            And... that's your status!
+            ╔══════════════════════════════════╗
+            ║        🌟 %s 🌟                  ║
+            ╠══════════════════════════════════╣
+            ║ Path: %s         Level: %d       ║
+            ║ Age: %d          HP: %d          ║
+            ║ Element: %s      Strength: %d    ║
+            ║ Weapon: %s       Agility: %d     ║
+            ║                  Magic: %d       ║
+            ╚══════════════════════════════════╝
+            Your choice:\s""".formatted(
+                    this.name,
+                    this.path,
+                    this.level,
+                    this.age,
+                    this.hp,
+                    this.element,
+                    this.strength,
+                    this.weapon,
+                    this.agility,
+                    this.magic
+            ));
+        }
+
+
 
         //Battle system
         public void showAttack(Character target) throws InterruptedException {
@@ -129,7 +275,7 @@
             public void scaleEnemy(Character that) {
                 if (this.defeated) {
                     if (that.level > this.level) {
-                        // player passed Goblin's level
+                        // this passed Goblin's level
                         this.defeated = false;
                         that.won = false;
                         this.level = that.level + this.baseLevel;
@@ -140,7 +286,7 @@
                         this.maxHp = this.hp;
                     }
                     else {
-                        // player is still at the same level
+                        // this is still at the same level
                         this.hp = this.maxHp;
                         this.defeated = false;
                         that.won = false;
@@ -268,6 +414,6 @@
                                 this.agility,
                                 this.magic
                         ));
+                }
             }
         }
-    }

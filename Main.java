@@ -14,8 +14,7 @@ public class Main {
         Character thunderDragon = new Character();
         Character waterDragon = new Character();
 
-    // Enemies status
-
+        // Enemies status
         // Goblin status
         goblin.name = "Goblin";
         goblin.level = 1;
@@ -30,6 +29,7 @@ public class Main {
         goblin.baseAgility = 4;
         goblin.baseMagic = 0;
         goblin.maxHp = 30;
+
         // Orc status
         orc.name = "Orc";
         orc.level = 1;
@@ -44,6 +44,7 @@ public class Main {
         orc.baseAgility = 2;
         orc.baseMagic = 0;
         orc.maxHp = 60;
+
         // Skeleton status
         skeleton.name = "Skeleton";
         skeleton.level = 1;
@@ -58,6 +59,7 @@ public class Main {
         skeleton.baseAgility = 8;
         skeleton.baseMagic = 6;
         skeleton.maxHp = 50;
+
         // Dragons status
         fireDragon.name = "Fire Dragon";
         fireDragon.level = 5;
@@ -101,202 +103,135 @@ public class Main {
         waterDragon.baseMagic = 20;
         waterDragon.maxHp = 70;
 
-        // First dialogue
-        System.out.print("What's your name? ");
-        player.name = scanner.nextLine();
+        // Game loop
+        boolean gameActive = true;
 
-        System.out.print("How old are you? ");
-        player.age = scanner.nextInt();
-        scanner.nextLine();
+        while (gameActive) {
 
-        if (player.age <= 18) {
-            System.out.println("Starting at that age, " + player.name + "? That's brave!");
+            System.out.println("\nYou have a chance to test this new powers! There's some monsters coming to attack the village!");
             Thread.sleep(500);
-        } else {
-            System.out.println("You know it's time when it's the time right, " + player.name + "? All right!");
-            Thread.sleep(500);
-        }
 
-        System.out.print("""
-                Which one of these do you have most connection with?
-                ╔══════════════════════════════════╗
-                ║           💥ELEMENTS             ║
-                ╠══════════════════════════════════╣
-                ║        🔥Fire                    ║
-                ║         ⚡Thunder                 ║
-                ║        ❄️Ice                     ║
-                ║        💧Water                   ║
-                ║        🌿Grass                   ║
-                ╚══════════════════════════════════╝
-                Your choice:\s""");
-        player.element = scanner.nextLine();
+            player.alive = true;
 
+            boolean battleActive = true;
 
-        System.out.print("""
-                Which one of these describes you better?
-                ╔══════════════════════════════════╗
-                ║           💥ELEMENTOS            ║
-                ╠══════════════════════════════════╣
-                ║        ⚔️Warrior                 ║
-                ║        🪄Mage                    ║
-                ║        🗡️Rogue                   ║
-                ╚══════════════════════════════════╝
-                Your choice:\s""");
-        player.path = scanner.nextLine();
-        Thread.sleep(500);
+            // Enemy randomizer
+            int enemyChoice = random.nextInt(6);
+            Character enemy = null;
 
-        // WARRIOR COMBINATIONS
-        if (player.path.equalsIgnoreCase("Warrior") && player.element.equalsIgnoreCase("Thunder")) {
-            System.out.println("\n!THOR COMBINATION ACTIVATED!\n" + "\nThunder Element + Warrior combination amplified your Thunder skills that uses an Axe!!!");
-            Thread.sleep(500);
-        } else if (player.path.equalsIgnoreCase("Warrior")) {
-            System.out.println("A strong one huh? I can see you'll be a great " + player.element + " Warrior someday");
-            Thread.sleep(500);
-        } else if (player.path.equalsIgnoreCase("Mage") && player.element.equalsIgnoreCase("Fire")) {
-            System.out.println("\n!PYROMANCER COMBINATION ACTIVATED!\n" + "\nFire Element + mage combination amplified your Fire skills that uses a Staff!!!");
-            Thread.sleep(500);
-        } else if (player.path.equalsIgnoreCase("Mage")) {
-            System.out.println("I can see... you're one of these heavy brains huh? You'll be a splendours " + player.element + " mage!");
-            Thread.sleep(500);
-        } else if (player.path.equalsIgnoreCase("Rogue")) {
-            System.out.println("Hm... A Rogue one... I didn't expected it but okay so, it's your choice after all. ");
-            Thread.sleep(500);
-        } else {
-            System.out.println("I've never heard about this path...");
-            Thread.sleep(500);
-        }
-
-        System.out.print("""
-                Which one of these fits you better?
-                ╔══════════════════════════════════╗
-                ║           💥WEAPONS              ║
-                ╠══════════════════════════════════╣
-                ║        🪓Axe                     ║
-                ║        🗡️Sword                   ║
-                ║        🏹Bow                     ║
-                ║        ⚔️Twin Knifes             ║
-                ║        🪄Staff                   ║
-                ╚══════════════════════════════════╝
-                Your choice:\s""");
-        Thread.sleep(500);
-        player.weapon = scanner.nextLine();
-
-        System.out.println(player.weapon + "? That's a good choice!\nNow let's see your status?");
-        Thread.sleep(500);
-
-        // Player status
-        if (player.path.equalsIgnoreCase("Warrior")) {
-            player.strength = 10;
-            player.agility = 4;
-            player.magic = 1;
-            player.hp = 25;
-        } else if (player.path.equalsIgnoreCase("Mage")) {
-            player.strength = 0;
-            player.agility = 5;
-            player.magic = 10;
-            player.hp = 15;
-        } else if (player.path.equalsIgnoreCase("Rogue")) {
-            player.strength = 4;
-            player.agility = 10;
-            player.magic = 5;
-            player.hp = 20;
-        }
-
-        //Weapon combinations
-        if (player.weapon.equalsIgnoreCase("Axe")) {
-            player.strength += 7;
-            player.agility -= 2;
-        } else if (player.weapon.equalsIgnoreCase("Sword")) {
-            player.strength += 5;
-            player.agility -= 1;
-        } else if (player.weapon.equalsIgnoreCase("bow")) {
-            player.agility += 7;
-            player.magic += 3;
-        } else if (player.weapon.equalsIgnoreCase("Twin Knifes")) {
-            player.strength += 3;
-            player.agility += 6;
-            player.magic -= 1;
-        } else if (player.weapon.equalsIgnoreCase("Staff")) {
-            player.magic += 10;
-            player.agility -= 4;
-            player.strength += 5;
-        }
-
-        Thread.sleep(500);
-        System.out.println("""
-                And... that's your status!
-                ╔══════════════════════════════════╗
-                ║        🌟 %s 🌟                  ║
-                ╠══════════════════════════════════╣
-                ║ Path: %s         Level: %d       ║
-                ║ Age: %d          HP: %d          ║
-                ║ Element: %s      Strength: %d    ║
-                ║ Weapon: %s       Agility: %d     ║
-                ║                  Magic: %d       ║
-                ╚══════════════════════════════════╝
-                Your choice:\s""".formatted(
-                player.name,
-                player.path,
-                player.level,
-                player.age,
-                player.hp,
-                player.element,
-                player.strength,
-                player.weapon,
-                player.agility,
-                player.magic
-        ));
-
-        System.out.println("\nYou have a chance to test this new powers! There's some monsters coming to attack the village!");
-        Thread.sleep(500);
-        player.alive = true;
-
-        boolean battleActive = true;
-
-        // Enemy randomizer
-        int enemyChoice = random.nextInt(6);
-        Character enemy = null;
-        if (enemyChoice == 0) {
-            enemy = goblin;
-        }
-        else if (enemyChoice == 1) {
-            enemy = orc;
-        }
-        else if (enemyChoice == 2) {
-            enemy = skeleton;
-        }
-        else if (enemyChoice == 3) {
-            enemy = fireDragon;
-        }
-        else if (enemyChoice == 4) {
-            enemy = thunderDragon;
-        }
-        else if (enemyChoice == 5) {
-            enemy = waterDragon;
-        }
-
-        while (battleActive) {
-
-            enemy.scaleEnemy(player);
-            player.showEnemy(enemy);
-            player.action = scanner.nextLine();
-
-            if (player.action.equalsIgnoreCase("Attack") || player.action.equalsIgnoreCase("1")) {
-                player.attack(enemy);
-                Thread.sleep(500);
+            if (enemyChoice == 0) {
+                enemy = goblin;
+            } else if (enemyChoice == 1) {
+                enemy = orc;
+            } else if (enemyChoice == 2) {
+                enemy = skeleton;
+            } else if (enemyChoice == 3) {
+                enemy = fireDragon;
+            } else if (enemyChoice == 4) {
+                enemy = thunderDragon;
+            } else {
+                enemy = waterDragon;
             }
-            else if (player.action.equalsIgnoreCase("Run") || player.action.equalsIgnoreCase("2")) {
-                boolean escaped = player.run(enemy);
 
-                if (escaped) {
+            while (battleActive) {
+
+                enemy.scaleEnemy(player);
+                player.showEnemy(enemy);
+                player.action = scanner.nextLine();
+
+                if (player.action.equalsIgnoreCase("Attack") || player.action.equalsIgnoreCase("1")) {
+
+                    player.attack(enemy);
+                    Thread.sleep(500);
+
+                } else if (player.action.equalsIgnoreCase("Run") || player.action.equalsIgnoreCase("2")) {
+
+                    boolean escaped = player.run(enemy);
+
+                    if (escaped) {
+                        battleActive = false;
+                    }
+                }
+
+                if (enemy.defeated) {
                     battleActive = false;
                 }
+
+                if (player.hp <= 0) {
+
+                    battleActive = false;
+                    player.defeated = true;
+
+                    System.out.println("""
+                            ╔═════════════════════════════════╗
+                            ║          ⚔️ YOU LOST            ║
+                            ╠═════════════════════════════════╣
+                            ║       %s HAS DEFEATED YOU       ║
+                            ╠═════════════════════════════════╣
+                            ║       Level: %d                 ║
+                            ║       HP: %d                    ║
+                            ║       Strength: %d              ║
+                            ║       Agility: %d               ║
+                            ║       Magic: %d                 ║
+                            ╚═════════════════════════════════╝
+                            """
+                            .formatted(
+                                    enemy.name,
+                                    player.level,
+                                    player.hp,
+                                    player.strength,
+                                    player.agility,
+                                    player.magic
+                            ));
+                }
             }
-            if (enemy.defeated) {
-                battleActive = false;
-            }
+
+            gameActive = gameOver(player, scanner);
         }
+
         scanner.close();
     }
-}
 
+    // Restart method
+    public static boolean gameOver(Character player, Scanner scanner) {
+
+        if (player.defeated) {
+
+            System.out.println("""
+                    ╔════════════════════════════════╗
+                    ║ %s You want to try again?      ║
+                    ╠════════════════╦═══════════════╣
+                    ║      YES       ║       NO      ║
+                    ╚════════════════╩═══════════════╝
+                    Your choice:\s""".formatted(
+                    player.name
+            ));
+
+            String restart = scanner.nextLine();
+
+            if (restart.equalsIgnoreCase("Yes")) {
+
+                player.level = 1;
+                player.xp = 0;
+                player.hp += player.baseHp;
+                player.defeated = false;
+                player.won = false;
+                player.alive = true;
+
+                return true;
+
+            } else {
+
+                System.out.println("""
+                        ╔═══════════════════════════════╗
+                        ║           GAME OVER           ║
+                        ╚═══════════════════════════════╝
+                        """);
+
+                return false;
+            }
+        }
+
+        return false;
+    }
+}
