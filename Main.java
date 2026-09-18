@@ -107,6 +107,8 @@ public class Main {
         boolean gameActive = true;
 
         while (gameActive) {
+            player.firstDialogue();
+            player.playerBaseStatus();
 
             System.out.println("\nYou have a chance to test this new powers! There's some monsters coming to attack the village!");
             Thread.sleep(500);
