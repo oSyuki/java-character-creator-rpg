@@ -7,6 +7,7 @@
         String path;
         String weapon;
         String action;
+        String enemy;
         //Integers
         int levelsRaised = 0;
         int level = 1;
@@ -29,7 +30,6 @@
         boolean alive;
 
         //Battle system
-
         public void showAttack(Character target) throws InterruptedException {
             // Show attack method
 
@@ -48,6 +48,7 @@
             );
         }
 
+        // Damage method
         public void attack(Character target) throws InterruptedException {
             // Set damage
             calculateDamage();
@@ -72,7 +73,7 @@
                 setVictory(target);
             }
         }
-
+        // Set victory method
         public void setVictory(Character target) throws InterruptedException {
             // Victory logic
             if (target.hp == 0) {
@@ -93,8 +94,8 @@
                 this.gainXP(30);
             }
         }
+            // Damage method (calculate)
             public void calculateDamage() {
-                // Damage method (calculate)
                 if (this.path.equalsIgnoreCase("Warrior")) {
                     damage = this.strength;
                 } else if (this.path.equalsIgnoreCase("Mage")) {
@@ -125,7 +126,6 @@
 
 
         //Enemy scaler system
-
             public void scaleEnemy(Character that) {
                 if (this.defeated) {
                     if (that.level > this.level) {
@@ -147,8 +147,8 @@
             }
         }
     }
+        // Show enemy status
      public void showEnemy(Character target) throws InterruptedException {
-         // Show enemy status
          System.out.println("""
                  ╔══════════════════════════════════╗
                  ║          ⚔️ %s                   ║
@@ -175,7 +175,6 @@
          ));
      }
         //XP system
-
         public void gainXP(int xpGained) throws InterruptedException {
             if (this.won) {
                 this.xp += xpGained;
@@ -203,7 +202,6 @@
 
 
         //Level up system
-
         public void levelUp() throws InterruptedException {
 
             while (xpToNextLevel <= 0) {
@@ -252,18 +250,17 @@
                         "Congratulations! " + this.name + " has leveled up " + levelsRaised + " times! "
                 );
                 levelsRaised = 0;
-                System.out.println(
-                        """
-                           ╔══════════════════════════════════╗
-                           ║          🌟 LEVEL UP 🌟          ║
-                           ╠══════════════════════════════════╣
-                           ║                                  ║
-                           ║       Level: %d                  ║
-                           ║       HP: %d                     ║
-                           ║       Strength: %d               ║
-                           ║       Agility: %d                ║        
-                           ║       Magic: %d                  ║
-                           ╚══════════════════════════════════╝
+                System.out.println("""
+                      ╔══════════════════════════════════╗
+                      ║          🌟 LEVEL UP 🌟          ║
+                      ╠══════════════════════════════════╣
+                      ║                                  ║
+                      ║       Level: %d                  ║
+                      ║       HP: %d                     ║
+                      ║       Strength: %d               ║
+                      ║       Agility: %d                ║        
+                      ║       Magic: %d                  ║
+                      ╚══════════════════════════════════╝
                            """.formatted(
                                 this.level,
                                 this.hp,
